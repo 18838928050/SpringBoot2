@@ -12,6 +12,7 @@
 package com.itmayiedu.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,6 +36,9 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 	
+	@Value("${name}")
+	private String name;
+	
 	@RequestMapping("/abc")
 	public String addMemberAndEmail(){
 		log.info("1");
@@ -44,4 +48,8 @@ public class MemberController {
 		return "result="+result;
 	}
 	
+	@RequestMapping("/getName")
+	public String getName(){
+		return name;
+	}
 }
