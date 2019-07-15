@@ -10,17 +10,17 @@ import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Aspect
 @Component
+@Slf4j
 public class WebLogAspect {
 
-	private static final Logger logger =  LoggerFactory.getLogger(WebLogAspect.class);
 
 	@Pointcut("execution(public * com.itmayiedu.controller.*.*(..))")
 	public void webLog() {
@@ -32,19 +32,19 @@ public class WebLogAspect {
 		ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
 		HttpServletRequest request = attributes.getRequest();
 		// 记录下请求内容
-		logger.info("URL : " + request.getRequestURL().toString());
-		logger.info("HTTP_METHOD : " + request.getMethod());
-		logger.info("IP : " + request.getRemoteAddr());
+		log.info("URL : " + request.getRequestURL().toString());
+		log.info("HTTP_METHOD : " + request.getMethod());
+		log.info("IP : " + request.getRemoteAddr());
 		Enumeration<String> enu = request.getParameterNames();
 		while (enu.hasMoreElements()) {
 			String name = enu.nextElement();
-			logger.info("name:{},value:{}", name, request.getParameter(name));
+			log.info("name:{},value:{}", name, request.getParameter(name));
 		}
 	}
 
 	@AfterReturning(returning = "ret", pointcut = "webLog()")
 	public void doAfterReturning(Object ret) throws Throwable {
 		// 处理完请求，返回内容
-		logger.info("RESPONSE : " + ret);
+		log.info("RESPONSE : " + ret);
 	}
 }
