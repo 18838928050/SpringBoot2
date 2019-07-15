@@ -36,8 +36,8 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 	
-	@Value("${name}")
-	private String name;
+	@Value("${http_url}")
+	private String http_url;
 	
 	@RequestMapping("/abc")
 	public String addMemberAndEmail(){
@@ -48,8 +48,14 @@ public class MemberController {
 		return "result="+result;
 	}
 	
+	
+
+	/**
+	 * @return the http_url
+	 */
 	@RequestMapping("/getName")
-	public String getName(){
-		return name;
+	public String getHttp_url() {
+		return http_url;
 	}
+	
 }
